@@ -1,0 +1,557 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>VirtualOnline.com</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: Arial, sans-serif;
+    }
+
+    header {
+      background-color: #0f4c75;
+      padding: 10px;
+      text-align: center;
+      color: #fff;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: 24px;
+    }
+
+    main {
+      padding: 20px;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+    }
+
+    .product {
+      width: 300px;
+      margin-bottom: 20px;
+      background-color: #fff;
+      border: 1px solid #ccc;
+      padding: 10px;
+      transition: transform 0.3s ease;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+    }
+
+    .product:hover {
+      transform: scale(1.03);
+    }
+
+    .product img {
+      width: 200px;
+      height: 200px;
+      object-fit: cover;
+      margin-bottom: 10px;
+      border-radius: 50%;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
+
+    .product-name {
+      font-size: 18px;
+      margin: 0;
+      color: #0f4c75;
+      margin-bottom: 5px;
+    }
+
+    .product-price {
+      margin: 0;
+      font-weight: bold;
+      color: #f57224;
+      margin-bottom: 10px;
+    }
+
+    .product-description {
+      margin: 0;
+      margin-bottom: 10px;
+    }
+
+    .button {
+      background-color: #0f4c75;
+      color: #fff;
+      border: none;
+      padding: 8px 12px;
+      font-size: 14px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    .button:hover {
+      background-color: #3282b8;
+    }
+
+    .featured-products {
+      width: 100%;
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    .featured-products-title {
+      font-size: 20px;
+      font-weight: bold;
+      color: #0f4c75;
+      margin-bottom: 10px;
+    }
+
+    .featured-products-button {
+      background-color: #0f4c75;
+      color: #fff;
+      border: none;
+      padding: 8px 12px;
+      font-size: 14px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    .featured-products-button:hover {
+      background-color: #3282b8;
+    }
+
+    footer {
+      background-color: #0f4c75;
+      padding: 10px;
+      text-align: center;
+      color: #fff;
+    }
+
+    .made-by {
+      text-align: center;
+      margin-top: 20px;
+      color: #0f4c75;
+    }
+
+    .cart-button {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background-color: #f57224;
+      color: #fff;
+      border: none;
+      padding: 10px 20px;
+      font-size: 16px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    .cart-button:hover {
+      background-color: #ff963c;
+    }
+
+    .cart-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.5);
+      display: none;
+      justify-content: center;
+      align-items: center;
+      z-index: 999;
+    }
+
+    .cart-items {
+      background-color: #fff;
+      border: 1px solid #ccc;
+      padding: 20px;
+      max-width: 400px;
+      width: 100%;
+      max-height: 400px;
+      overflow-y: auto;
+    }
+
+    .cart-item {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 10px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid #ccc;
+    }
+
+    .cart-item img {
+      width: 50px;
+      height: 50px;
+      object-fit: cover;
+      margin-right: 10px;
+    }
+
+    .cart-item-details {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .cart-item-name {
+      font-size: 16px;
+      margin: 0;
+      color: #000000;
+    }
+
+    .cart-item-price {
+      margin: 0;
+      color: #f57224;
+      font-weight: bold;
+    }
+
+    .cart-close {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      color: #0f4c75;
+      cursor: pointer;
+      font-size: 24px;
+      font-weight: bold;
+    }
+
+    .offers-popup {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background-color: #3282b8;
+      color: hsla(234, 74%, 55%, 0.934);
+      padding: 20px;
+      text-align: center;
+      display: none;
+      z-index: 999;
+    }
+
+    .offers-popup h2 {
+      margin: 0;
+      font-size: 24px;
+      margin-bottom: 10px;
+    }
+
+    .offers-popup p {
+      margin: 0;
+      margin-bottom: 10px;
+    }
+
+    .offers-popup button {
+      background-color: #889299;
+      color: #fff;
+      border: none;
+      padding: 8px 12px;
+      font-size: 14px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    .offers-popup button:hover {
+      background-color: #3282b8;
+    }
+
+    @media (max-width: 768px) {
+      .product {
+        width: 100%;
+        max-width: 400px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>VIRTUALCART</h1>
+  </header>
+  
+  <main>
+    <section class="featured-products">
+      <h2 class="featured-products-title">Featured Products</h2>
+      <button class="featured-products-button" onclick="showRandomProduct()">View Featured</button>
+    </section>
+
+    <div class="product">
+      <img src="C:\Users\mohan\New folder\fri.jpg" alt="refrigerator" width="400" height="150"/>
+      <h2 class="product-name">fridge</h2>
+      <p class="product-price">₹11490</p>
+      <p class="product-description">Godrej 180 L Direct Cool Single Door 1 Star Refrigerator(Wine Red)
+        <p  < span style="color:green">3.86</span></p>  Ratings
+        ₹15,490 28% off
+        </p>
+      <button class="button add-to-cart">Add to Cart</button>
+      <p></p>
+      <section class="  ">
+        <h2 class="  "> </h2>
+        <button class="  -button" onclick="selling()">Buy</button>
+      </section>
+    </div>
+
+    <div class="product">
+      <img src="C:\Users\mohan\New folder\watch.jpg" alt="Product 2">
+      <h2 class="product-name">smart watch</h2>
+      <p class="product-price">₹2799</p>
+      <p class="product-description">Smart watch with bluetooth calling </p>
+      <p < span style="color:green">4.5</span></p>  
+      ₹3200 18% off
+    </p>
+      <button class="button add-to-cart">Add to Cart</button>
+      <p></p>
+      <section class="  ">
+        <h2 class="  "> </h2>
+        <button class="  -button" onclick="sell()">Buy</button>
+      </section>
+    </div>
+
+    <div class="product">
+      <img src="C:\Users\mohan\New folder\mobile.jpg" alt="Product 3">
+      <h2 class="product-name">Mobile</h2>
+      <p class="product-price">₹1,29,999</p>
+      <p class="product-description">Samsung Galaxy 12GB Ram 256GB ROM Snapdragon10 processor</p>
+      <p < span style="color:green">4.5</span></p>  
+      ₹1,46,000 28% off
+      <p></p>
+      <button class="button add-to-cart">Add to Cart</button>
+      <p></p>
+      <section class="  ">
+        <h2 class="  "> </h2>
+        <button class="  -button" onclick="sel()">Buy</button>
+      </section>
+    </div>
+    <div class="product">
+      <img src="C:\Users\mohan\New folder\ac.jpg" alt="Product 3">
+      <h2 class="product-name">Air Conditioner</h2>
+      <p class="product-price">₹38,999</p>
+      <p class="product-description">Loyyd Air conditioner 1.5 ton 5star Ac</p>
+      <p < span style="color:green">4.7</span></p>  
+      ₹43,999 22% off
+      <p></p>
+      <button class="button add-to-cart">Add to Cart</button>
+      <p></p>
+      <section class="  ">
+        <h2 class="  "> </h2>
+        <button class="  -button" onclick="se()">Buy</button>
+      </section>
+    </div>
+    <div class="product">
+      <img src="C:\Users\mohan\New folder\tv.jpg" alt="Product 3">
+      <h2 class="product-name">Telivision</h2>
+      <p class="product-price">₹52999</p>
+      <p class="product-description">LG UHD TV UQ75 43 (108cm) 4K Smart TV | WebOS | ThinQ AI | Active HDR</p>
+      <p < span style="color:green">4.5</span></p>  
+      ₹63,999 32% off
+      <p></p>
+      <p></p>
+      <button class="button add-to-cart">Add to Cart</button>
+      <p></p>
+      <section class="  ">
+        <h2 class="  "> </h2>
+        <button class="  -button" onclick="s()">Buy</button>
+      </section>
+    </div>
+    <div class="product">
+      <img src="C:\Users\mohan\New folder\buds - Shortcut.lnk" alt="Product 3">
+      <h2 class="product-name">Air buds</h2>
+      <p class="product-price">₹1,299</p>
+      <p class="product-description">BL Wave 200 True Wireless In Ear Earbuds with Mic, 20 Hours Playtime</p>
+      <p < span style="color:green">4.5</span></p>  
+      ₹1,799 12% off
+      <p></p>
+      <p></p>
+      <p></p>
+      <button class="button add-to-cart">Add to Cart</button>
+      <p></p>
+      <section class="  ">
+        <h2 class="  "> </h2>
+        <button class="  -button" onclick="sec()">Buy</button>
+      </section>
+    </div>
+    <div class="product">
+      <img src="C:\Users\mohan\New folder\LP.JPG" alt="Product 3">
+      <h2 class="product-name">Laptop</h2>
+      <p class="product-price">₹52,999</p>
+      <p class="product-description">Microsoft - Surface Laptop 4-13.5 Touch-Screen Windows 10 Pro, AMD Ryzen 5 Surface Edition - 8GB Memory - 128GB SSD Latest Model - Platinum
+        Brand: Microsoft</p>
+        <p < span style="color:green">4.4</span></p>  
+      ₹62,999 32% off
+      <p></p>
+      <button class="button add-to-cart">Add to Cart</button>
+      <p></p>
+      <section class="  ">
+        <h2 class="  "> </h2>
+        <button class="  -button" onclick="sold()">Buy</button>
+      </section>
+    </div>
+    <div class="product">
+      <img src="C:\Users\mohan\New folder\puriet.jpg" alt="Product 3">
+      <h2 class="product-name">Puriet</h2>
+      <p class="product-price">₹2,999</p>
+      <p class="product-description">1500 Litres HUL Pureit Classic Germkill Kit Water Purifier</p>
+      <p < span style="color:green">4.5</span></p>  
+      ₹3,799 12% off
+      <p></p>
+      <p></p>
+      <p></p>
+      <button class="button add-to-cart">Add to Cart</button>
+      <p></p>
+      <section class="  ">
+        <h2 class="  "> </h2>
+        <button class="  -button" onclick="solding()">Buy</button>
+      </section>
+    </div>
+    <!-- Add more products here -->
+
+  </main>
+  
+  <footer>
+    <p>Contact Details: helplinecentre@email.com | 123-456-7890</p>
+  </footer>
+
+  <div class="developed by">
+    <p>SagarNunela[ITHUB1229]</p>
+  </div>
+
+  <button class="cart-button">Show Cart</button>
+  <div class="cart-overlay" onclick="closeCart()">
+    <div class="cart-items">
+      <span class="cart-close" onclick="closeCart()">&times;</span>
+      <h2>Your Cart</h2>
+      <div class="cart-item">
+        <img src="fri.jpg" alt="Product 1">
+        <div class="cart-item-details">
+          <h3 class="cart-item-name">fridge</h3>
+          <p class="cart-item-price">₹11,490</p>
+          <button class="button remove-from-cart">Remove</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="offers-popup" id="offers-popup">
+    <span class="cart-close" onclick="closeOffersPopup()">&times;</span>
+    <h2>Special Offers</h2>
+    <p>Get up to 50% off on selected products!</p>
+    <button class="button">View Offers</button>
+  </div>
+
+  <script>
+    const cartButton = document.querySelector('.cart-button');
+    const cartOverlay = document.querySelector('.cart-overlay');
+    const cartClose = document.querySelector('.cart-close');
+    const addToCartButtons = document.querySelectorAll('.add-to-cart');
+    const removeButtons = document.querySelectorAll('.remove-from-cart');
+    const offersPopup = document.getElementById('offers-popup');
+
+    // Show cart
+    cartButton.addEventListener('click', () => {cartOverlay.style.display = 'flex';});
+
+    // Close cart
+    function closeCart() {
+      cartOverlay.style.display = 'none';
+    }
+
+   // Add to cart
+   addToCartButtons.forEach(button => {
+    button.addEventListener('click', () => {
+      const product = button.closest('.product');
+      const productName = product.querySelector('.product-name').textContent;
+      const productPrice = product.querySelector('.product-price').textContent;
+
+      const cartItem = document.createElement('div');
+      cartItem.classList.add('cart-item');
+      cartItem.innerHTML = `
+        <img src="${product.querySelector('img').src}" alt="${productName}">
+        <div class="cart-item-details">
+          <h3 class="cart-item-name">${productName}</h3>
+          <p class="cart-item-price">${productPrice}</p>
+          <button class="button remove-from-cart">Remove</button>
+        </div>
+      `;
+
+      const cartItemsContainer = document.querySelector('.cart-items');
+      cartItemsContainer.appendChild(cartItem);
+
+      button.textContent = 'Added to Cart';
+      button.disabled = true;
+
+      alert('Added to cart');
+    });
+  });
+
+
+    // Remove from cart
+    removeButtons.forEach(button => {
+      button.addEventListener('click', () => {
+        const cartItem = button.closest('.cart-item');
+        cartItem.remove();
+      });
+    });
+
+    // Show random featured product
+    function showRandomProduct() {
+      const products = document.querySelectorAll('.product');
+      const randomIndex = Math.floor(Math.random() * products.length);
+      window.location.href ="https://www.shiprocket.in/blog/most-demanded-products-india-online/" + products[randomIndex].id;
+    }
+    function selling() {
+      const products = document.querySelectorAll('.product');
+      const randomIndex = Math.floor(Math.random() * products.length);
+      window.location.href ="https://www.flipkart.com/samsung-236-l-frost-free-double-door-3-star-refrigerator/p/itmebd442b9443a6?pid=RFRGPHMKJCBXQTK7&lid=LSTRFRGPHMKJCBXQTK7CSYSMK&marketplace=FLIPKART&store=j9e%2Fabm%2Fhzg&srno=b_1_2&otracker=browse&fm=organic&iid=en_TYO8kiYquAxy6vcy9YNPpKNvUVZkrw7Z2PufRflJ6NAtj16LORn67EzFxCNwKt_VhwI1YP03NxZGujs-FU4OGg%3D%3D&ppt=None&ppn=None&ssid=d1udeuodts0000001688664231047" + products[randomIndex].id;
+    }
+    function sell() {
+      const products = document.querySelectorAll('.product');
+      const randomIndex = Math.floor(Math.random() * products.length);
+      window.location.href ="https://www.gonoise.com/products/noise-colorfit-pro-4-alpha-smartwatch?variant=40059636023383&currency=INR&utm_medium=product_sync&utm_medium=cpc&utm_source=google&utm_source=google&utm_content=sag_organic&utm_campaign=sag_organic&utm_campaign=19403668765&gclid=CjwKCAjwzJmlBhBBEiwAEJyLu5-hpJNvkESq-DnkFx6basbvy34sF-9SSk_h-6Vr8R91qQRqPttKthoCUjYQAvD_BwE" + products[randomIndex].id;
+    }
+    function sel() {
+      const products = document.querySelectorAll('.product');
+      const randomIndex = Math.floor(Math.random() * products.length);
+      window.location.href ="https://www.samsung.com/in/smartphones/all-smartphones/" + products[randomIndex].id;
+    }
+    function se() {
+      const products = document.querySelectorAll('.product');
+      const randomIndex = Math.floor(Math.random() * products.length);
+      window.location.href ="https://www.amazon.in/dp/B0BRQCYQHK/ref=s9_acsd_al_bw_c2_x_3_i?pf_rd_m=A1K21FY43GMZF8&pf_rd_s=merchandised-search-11&pf_rd_r=HDS3QZMES2CGGPE9Y3HC&pf_rd_t=101&pf_rd_p=088e40a5-28bc-41e0-9b92-40b0d7831c9a&pf_rd_i=3474656031" + products[randomIndex].id;
+    }
+    function s() {
+      const products = document.querySelectorAll('.product');
+      const randomIndex = Math.floor(Math.random() * products.length);
+      window.location.href ="https://www.lg.com/in/tvs/lg-43uq7550psf" + products[randomIndex].id;
+    }
+    function sec() {
+      const products = document.querySelectorAll('.product');
+      const randomIndex = Math.floor(Math.random() * products.length);
+      window.location.href ="https://www.amazon.com/JBL-225TWS-Wireless-Earbud-Headphones/dp/B088NDGYPX" + products[randomIndex].id;
+    }
+    function sold() {
+      const products = document.querySelectorAll('.product');
+      const randomIndex = Math.floor(Math.random() * products.length);
+      window.location.href ="https://www.amazon.in/Microsoft-Surface-Laptop-Touch-Screen-Platinum/dp/B08YX17KJN" + products[randomIndex].id;
+    }
+    function solding() {
+      const products = document.querySelectorAll('.product');
+      const randomIndex = Math.floor(Math.random() * products.length);
+      window.location.href ="https://www.pureitwater.com/promotions?utm_source=google&utm_medium-search&utm_campaign=EN_WGTMGT_Cult-(Pureit)-CN002392_Con_Txt_CPC_BrndProd_EM_IN3194&gclid=CjwKCAjwzJmlBhBBEiwAEJyLu2Fed1ePdZRVtv5Khxx41A6gWck-xBYWpxgRkUtTIQogb_kQeniQEBoCYBsQAvD_BwE&gclsrc=aw.ds#Always|Search-PAN_India-Prospecting-Copper_Plus_Ro-Life_Essentials-Brand--Performance_Inform_d2c_purchase&utm_adgroup=Brand_na_pureit_brand&utm_term=pureit" + products[randomIndex].id;
+    }
+
+    // Show offers popup
+    function showOffersPopup() {
+      offersPopup.style.display = 'block';
+    }
+
+    // Close offers popup
+    function closeOffersPopup() {
+      offersPopup.style.display = 'none';
+    }
+
+    // Close cart when clicked outside
+    window.addEventListener('click', (event) => {
+      if (event.target === cartOverlay) {
+        closeCart();
+      }
+    });
+  </script>
+</body>
+</html>
